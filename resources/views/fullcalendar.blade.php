@@ -1,15 +1,15 @@
-@extends('layout')
+@extends('layouts.app')
 @section('style')
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {{--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
 @endsection
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Full Calendar Example</div>
-                    <div class="panel-body">
+            <div class="col-md-8 offset-md-4">
+                <div class="card card-default">
+                    <div class="card-heading">Full Calendar Example</div>
+                    <div class="card-body">
                         {!! $calendar->calendar() !!}
                     </div>
                 </div>
