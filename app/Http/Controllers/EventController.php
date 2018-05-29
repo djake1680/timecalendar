@@ -8,6 +8,7 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $timezone = config('app.timezone');
     }
 
     public function index()
@@ -24,13 +25,37 @@ class EventController extends Controller
                     null,
                     // Add color and link on event
                     [
-                        'color' => '#ff0000',
-                        'url' => 'pass here url and any route',
+                        'timezone' => 'local',
+                        'textColor' => 'white',
+                        'request_type' => $value->request_type,
+//                        'url' => 'pass here url and any route',
                     ]
                 );
             }
         }
-        $calendar = Calendar::addEvents($events);
+        $calendar = Calendar::addEvents($events)
+        ->setCallbacks([
+            'editable' => true,
+            'eventDurationEditable' => true,
+            'nextDayThreshold' => '"00:00:00"',
+            'selectable' => true,
+            'selectHelper' => true,
+            'eventClick' => 'function(calEvent, jsEvent, view) {
+            console.log(calEvent);
+	        }',
+            'eventRender' => 'function(event, element, view) {
+            console.log(event);
+            if(event.request_type === "sick") {
+                element.css(\'background-color\', \'#33cc00\');
+            }
+            }',
+            'select' => 'function(start, end, allDay) {
+                start = $.fullCalendar.formatDate(start, "YYYY-MM-DD");
+                end = start;
+                console.log(end);
+                $("#exampleModalLong").modal("show");
+            }'
+        ]);
         return view('fullcalendar', compact('calendar'));
     }
 }
