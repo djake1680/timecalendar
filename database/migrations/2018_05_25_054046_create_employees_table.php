@@ -17,6 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->increments('id');
             $table->timestamps();
         });
+
     }
 
     /**

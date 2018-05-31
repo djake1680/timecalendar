@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Event;
+use App\Employee;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -99,7 +101,25 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $start = $request->input('start');
+        $start = new Carbon($start);
+        $start = $start->toDateString();
+
+        $end = $request->input('end');
+        $end = new Carbon($end);
+        $end = $end->toDateString();
+
+        $event = new Event;
+        $event->title = "Trevor Linan";
+        $event->employee_id = "12345";
+        $event->start_date = $start;
+        $event->end_date = $end;
+        $event->request_type = $request->input('request_type');
+        $event->time_category = $request->input('time_category');
+        $event->save();
+
+        return redirect('/calendar');
+//        ->with('success', 'Todo Created');
     }
 
     /**
