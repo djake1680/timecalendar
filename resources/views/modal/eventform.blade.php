@@ -11,6 +11,15 @@
             </div>
             <div class="modal-body">
 
+                <select name="employee_search_list" class="form-control" id="employee_search_list" style="width: 100%;">
+                    <option value="">Select Employee</option>
+                    @foreach($employees as $employee)
+
+                        <option value="{{ $employee->employee_id }}">{{ $employee->first_name . " " . $employee->last_name . " - " . $employee->employee_id }}</option>
+
+                    @endforeach
+                </select>
+
                 {{--<input class="datepicker" data-date-format="mm/dd/yyyy">--}}
                 <div class="form-group" id="time_category_select">
                     <label for="request_type">Time Off Reason</label>

@@ -7,5 +7,7 @@ use App\Event;
 
 class EmployeeController extends Controller
 {
+    public function get(Request $request) {
 
+    }
 }

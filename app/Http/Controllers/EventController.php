@@ -23,6 +23,8 @@ class EventController extends Controller
      */
     public function index()
     {
+        $employees = Employee::all();
+
         $events = [];
         $data = Event::all();
         if($data->count()) {
@@ -79,7 +81,7 @@ class EventController extends Controller
                 
             }'
         ]);
-        return view('fullcalendar', compact('calendar'));
+        return view('fullcalendar', compact('calendar', 'employees'));
     }
 
 
@@ -101,6 +103,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $employee = Employee::where('employee_id', '=', $request->employee_search_list)->first();
+
         $start = $request->input('start');
         $start = new Carbon($start);
         $start = $start->toDateString();
@@ -110,7 +114,7 @@ class EventController extends Controller
         $end = $end->toDateString();
 
         $event = new Event;
-        $event->title = "Trevor Linan";
+        $event->title = $employee->first_name . " " . $employee->last_name;
         $event->employee_id = "12345";
         $event->start_date = $start;
         $event->end_date = $end;

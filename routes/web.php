@@ -21,4 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('calendar', 'EventController@index');
 
-Route::resource('calendar', 'EventController');
+Route::resource('event', 'EventController');
+
+//Route::post('calendar', 'EmployeeController@get');

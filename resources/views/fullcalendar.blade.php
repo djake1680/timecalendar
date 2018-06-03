@@ -7,7 +7,10 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-7 offset-md-4">
+            <div class="col-md-4">
+                @include('calendar.sidebar')
+            </div>
+            <div class="col-md-7">
                 <div class="card card-default">
                     <div class="card-heading"></div>
                     <div class="card-body calendar">
