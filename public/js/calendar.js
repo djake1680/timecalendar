@@ -1,11 +1,21 @@
 $(document).ready(function(){
 
-    // $(document).on('click', ".calendar td", function() {
-    //     console.log("click on td");
-    //     $(".save-event").on("click", function(event) {
-    //          event.preventDefault();
-    //          console.log("Save button clicked");
-    //     });
-    // });
+    $('#employee-search-list').select2({
+        placeholder: {
+            id: "-1",
+            placeholder: "Select an employee"
+        }
+    });
+
+    $('#employee-search-list').select2({
+        selectOnClose: true
+    }).on('change', function(e) {
+        let empID = $(this).val();
+        console.log(empID);
+        $.get('/event/' + empID, function(response) {
+            console.log(response);
+        });
+
+    });
 
 });

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     public function employee() {
-        return $this->belongsTo('App\Album');
+        return $this->belongsTo('App\Employee');
     }
 }

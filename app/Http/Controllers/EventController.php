@@ -134,7 +134,13 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        //
+//        $events = Employee::find($id);
+        $events = Employee::find($id)->events()->get();
+
+//        dd($events);
+        return response()->json([
+            $events,
+        ]);
     }
 
     /**
