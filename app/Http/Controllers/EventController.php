@@ -139,7 +139,7 @@ class EventController extends Controller
 
 //        dd($events);
         return response()->json([
-            $events,
+            'data' => $events,
         ]);
     }
 

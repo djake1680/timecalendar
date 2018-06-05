@@ -4,12 +4,13 @@
     <link rel="stylesheet" href="/css/calendar.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 @include('calendar.sidebar')
             </div>
             <div class="col-md-7">
@@ -29,5 +30,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="/js/calendar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     {!! $calendar->script() !!}
 @endsection

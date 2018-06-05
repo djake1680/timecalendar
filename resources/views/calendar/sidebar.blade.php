@@ -23,10 +23,22 @@
                 {{--@endforeach--}}
                 @foreach($employees as $employee)
 
-                    <option value="{{ $employee->id }}">{{ $employee->first_name . " " . $employee->last_name . " - " . $employee->employee_id }}</option>
+                    <option value="{{ $employee->employee_id }}">{{ $employee->first_name . " " . $employee->last_name . " - " . $employee->employee_id }}</option>
 
                 @endforeach
             </select>
+        </div>
+
+        <div>
+            <table id="employee_event_list" class="display table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+                </thead>
+            </table>
         </div>
 
     </div>
