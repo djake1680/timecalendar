@@ -17,7 +17,10 @@
         </li>
         @auth
         <li class="nav-item">
-            <a class="nav-link" href="#">Config</a>
+            <a class="nav-link" href="/calendar">Calendar</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/management">Management</a>
         </li>
         @endauth
     </ul>
