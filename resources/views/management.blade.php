@@ -13,22 +13,11 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-sm-4 offset-sm-4">
             <div class="tab-content">
                 <!-- EMPLOYEES TAB STARTS -->
                 <div class="tab-pane active" id="add_employee" role="tabpanel">
-                    {{--{!!Form::open(['action' => 'EmployeeController@store', 'method' => 'POST']) !!}--}}
-                    {!! Form::open() !!}
-                    {{ csrf_field() }}
-                    @include('components.management.addEmployee')
-
-
-                    {!! Form::close() !!}
-
-                    <div class="form-group">
-
-                    </div>
-
+                        @include('components.management.addEmployee')
                 </div>
                 <!-- EMPLOYEES TAB ENDS -->
 

@@ -21,10 +21,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/management', function () {
     return view('management');
-});
+})->middleware('auth');;
 
 Route::get('calendar', 'EventController@index');
 
-Route::resource('event', 'EventController');
+Route::resources([
+    'event' => 'EventController',
+    'employees' => 'EmployeeController'
+]);
 
 //Route::post('calendar', 'EmployeeController@get');

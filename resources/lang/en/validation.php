@@ -128,6 +128,15 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'first-name' => [
+            'required' => 'First name is required',
+        ],
+        'last-name' => [
+            'required' => 'Last name is required',
+        ],
+        'employee_id' => [
+            'required' => 'Employee ID is required',
+        ],
     ],
 
     /*
