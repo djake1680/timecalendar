@@ -40,6 +40,7 @@ class EventController extends Controller
                         'timezone' => 'local',
                         'textColor' => 'white',
                         'request_type' => $value->request_type,
+                        'id' => $value->id
 //                        'url' => 'pass here url and any route',
                     ]
                 );
@@ -56,7 +57,6 @@ class EventController extends Controller
             console.log(calEvent);
             }',
             'eventRender' => 'function(event, element, view) {
-            console.log(event);
             if(event.request_type === "sick") {
                 element.css(\'background-color\', \'#33cc00\');
             }
@@ -79,6 +79,18 @@ class EventController extends Controller
                     showDropdowns: true
                 });
                 
+            }',
+            'eventResize' => 'function(event) {
+                var eventEnd = moment(event.end).format("YYYY-MM-DD");
+                console.log(event);
+                $.post("calendar/resize", {
+                     _token: $(\'meta[name=csrf-token]\').attr(\'content\'),
+                    eventEnd: eventEnd,
+                    id: event.id,
+                    function(response){
+                    console.log(response);
+                    }
+                });
             }'
         ]);
         return view('fullcalendar', compact('calendar', 'employees'));
@@ -164,6 +176,18 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+
+
+    public function resize(Request $request)
+    {
+        $data = $request->input('eventEnd');
+        $id = $request->input('id');
+
+        $event = Event::find($id);
+        $event->end_date = $data;
+        $event->save();
     }
 
     /**
