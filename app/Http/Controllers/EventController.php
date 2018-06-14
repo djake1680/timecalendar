@@ -80,8 +80,24 @@ class EventController extends Controller
                 });
                 
             }',
+            'eventDrop' => 'function(event, delta, row) {
+                var eventStart = moment(event.start).format("YYYY-MM-DD");
+                var eventEnd = moment(event.end).subtract(1, "days").format("YYYY-MM-DD");
+                console.log("eventStart", moment(event.start).format("YYYY-MM-DD"));
+                console.log("eventEnd", moment(event.end).format("YYYY-MM-DD"));
+                
+                $.post("calendar/event_drop", {
+                     _token: $(\'meta[name=csrf-token]\').attr(\'content\'),
+                    eventStart: eventStart,
+                    eventEnd: eventEnd,
+                    id: event.id,
+                    function(response){
+                        console.log(response);
+                    }
+                });
+            }',
             'eventResize' => 'function(event) {
-                var eventEnd = moment(event.end).format("YYYY-MM-DD");
+                var eventEnd = moment(event.end).subtract(1, "days").format("YYYY-MM-DD");
                 console.log(event);
                 $.post("calendar/resize", {
                      _token: $(\'meta[name=csrf-token]\').attr(\'content\'),
@@ -182,11 +198,23 @@ class EventController extends Controller
 
     public function resize(Request $request)
     {
-        $data = $request->input('eventEnd');
         $id = $request->input('id');
+        $end = $request->input('eventEnd');
 
         $event = Event::find($id);
-        $event->end_date = $data;
+        $event->end_date = $end;
+        $event->save();
+    }
+
+    public function event_drop(Request $request)
+    {
+        $id = $request->input('id');
+        $start = $request->input('eventStart');
+        $end = $request->input('eventEnd');
+
+        $event = Event::find($id);
+        $event->start_date = $start;
+        $event->end_date = $end;
         $event->save();
     }
 

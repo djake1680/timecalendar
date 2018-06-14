@@ -27,6 +27,8 @@ Route::get('calendar', 'EventController@index');
 
 Route::post('calendar/resize', 'EventController@resize');
 
+Route::post('calendar/event_drop', 'EventController@event_drop');
+
 Route::resources([
     'event' => 'EventController',
     'employees' => 'EmployeeController'
