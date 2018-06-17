@@ -7,6 +7,7 @@
 
 @endsection
 @section('content')
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5">
@@ -15,9 +16,7 @@
             <div class="col-md-7">
                 <div class="card card-default">
                     <div class="card-heading"></div>
-                    <div class="card-body calendar">
-                        {!! $calendar->calendar() !!}
-                    </div>
+                    <div class="card-body calendar" id="calendar"></div>
                 </div>
             </div>
         </div>
@@ -29,5 +28,4 @@
     <script src="/js/calendar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    {!! $calendar->script() !!}
 @endsection

@@ -25,12 +25,14 @@ Route::get('/management', function () {
 
 Route::get('calendar', 'EventController@index');
 
+Route::get('calendar/events', 'EventController@getEvents');
+
 Route::post('calendar/resize', 'EventController@resize');
 
 Route::post('calendar/event_drop', 'EventController@event_drop');
 
 Route::resources([
-    'event' => 'EventController',
+    'events' => 'EventController',
     'employees' => 'EmployeeController'
 ]);
 

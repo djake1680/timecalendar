@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             {!! Form::open(['action' => 'EventController@store', 'method' => 'POST']) !!}
@@ -11,14 +11,16 @@
             </div>
             <div class="modal-body">
 
-                <select name="employee_search_list" class="form-control" id="employee_search_list" style="width: 100%;">
-                    <option value="">Select Employee</option>
-                    @foreach($employees as $employee)
+                <div class="form-group" id="employee-name">
+                    <select name="employee_search_list" class="form-control" id="employee_search_list" style="width: 100%;">
+                        <option value="">Select Employee</option>
+                        @foreach($employees as $employee)
 
-                        <option value="{{ $employee->employee_id }}">{{ $employee->first_name . " " . $employee->last_name . " - " . $employee->employee_id }}</option>
+                            <option value="{{ $employee->employee_id }}">{{ $employee->first_name . " " . $employee->last_name . " - " . $employee->employee_id }}</option>
 
-                    @endforeach
-                </select>
+                        @endforeach
+                    </select>
+                </div>
 
                 {{--<input class="datepicker" data-date-format="mm/dd/yyyy">--}}
                 <div class="form-group" id="time_category_select">
@@ -55,7 +57,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary save-event">Save changes</button>
+                <button type="submit" class="btn btn-primary save-event">Save</button>
             </div>
 
             {!! Form::close() !!}

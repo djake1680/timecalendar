@@ -24,7 +24,22 @@ class EventController extends Controller
     public function index()
     {
         $employees = Employee::all();
+        return view('fullcalendar', compact('employees'));
+    }
 
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    public function getEvents()
+    {
         $events = [];
         $data = Event::all();
         if($data->count()) {
@@ -46,81 +61,7 @@ class EventController extends Controller
                 );
             }
         }
-        $calendar = Calendar::addEvents($events)
-        ->setCallbacks([
-            'editable' => true,
-            'eventDurationEditable' => true,
-            'nextDayThreshold' => '"00:00:00"',
-            'selectable' => true,
-            'selectHelper' => true,
-            'eventClick' => 'function(calEvent, jsEvent, view) {
-            console.log(calEvent);
-            }',
-            'eventRender' => 'function(event, element, view) {
-            if(event.request_type === "sick") {
-                element.css(\'background-color\', \'#33cc00\');
-            }
-            }',
-            'select' => 'function(start, end, allDay) {
-                start = $.fullCalendar.formatDate(start, "MM/DD/YYYY");
-                end = start;
-                $("#exampleModalLong").modal("show");
-                $(".event-modal-title").html("Add Time Off");
-                
-                $(\'#dateStart\').daterangepicker({
-                    startDate: start,
-                    singleDatePicker: true,
-                    showDropdowns: true
-                });
-
-                $(\'#dateEnd\').daterangepicker({
-                    startDate: end,
-                    singleDatePicker: true,
-                    showDropdowns: true
-                });
-                
-            }',
-            'eventDrop' => 'function(event, delta, row) {
-                var eventStart = moment(event.start).format("YYYY-MM-DD");
-                var eventEnd = moment(event.end).subtract(1, "days").format("YYYY-MM-DD");
-                console.log("eventStart", moment(event.start).format("YYYY-MM-DD"));
-                console.log("eventEnd", moment(event.end).format("YYYY-MM-DD"));
-                
-                $.post("calendar/event_drop", {
-                     _token: $(\'meta[name=csrf-token]\').attr(\'content\'),
-                    eventStart: eventStart,
-                    eventEnd: eventEnd,
-                    id: event.id,
-                    function(response){
-                        console.log(response);
-                    }
-                });
-            }',
-            'eventResize' => 'function(event) {
-                var eventEnd = moment(event.end).subtract(1, "days").format("YYYY-MM-DD");
-                console.log(event);
-                $.post("calendar/resize", {
-                     _token: $(\'meta[name=csrf-token]\').attr(\'content\'),
-                    eventEnd: eventEnd,
-                    id: event.id,
-                    function(response){
-                    console.log(response);
-                    }
-                });
-            }'
-        ]);
-        return view('fullcalendar', compact('calendar', 'employees'));
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json($data);
     }
 
     /**
@@ -132,20 +73,17 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $employee = Employee::where('employee_id', '=', $request->employee_search_list)->first();
-
-        $start = $request->input('start');
-        $start = new Carbon($start);
+        $start = new Carbon($request->input('start'));
         $start = $start->toDateString();
-
-        $end = $request->input('end');
-        $end = new Carbon($end);
+        $end = new Carbon($request->input('end'));
+        $end = $end->addDays(1);
         $end = $end->toDateString();
 
         $event = new Event;
         $event->title = $employee->first_name . " " . $employee->last_name;
-        $event->employee_id = "12345";
-        $event->start_date = $start;
-        $event->end_date = $end;
+        $event->employee_id = $request->employee_search_list;
+        $event->start = $start;
+        $event->end = $end;
         $event->request_type = $request->input('request_type');
         $event->time_category = $request->input('time_category');
         $event->save();
@@ -202,7 +140,7 @@ class EventController extends Controller
         $end = $request->input('eventEnd');
 
         $event = Event::find($id);
-        $event->end_date = $end;
+        $event->end = $end;
         $event->save();
     }
 
@@ -213,8 +151,8 @@ class EventController extends Controller
         $end = $request->input('eventEnd');
 
         $event = Event::find($id);
-        $event->start_date = $start;
-        $event->end_date = $end;
+        $event->start = $start;
+        $event->end = $end;
         $event->save();
     }
 
