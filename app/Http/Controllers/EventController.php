@@ -129,7 +129,18 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $timeCategory = $request->input('time_category');
+        $event = Event::find($id);
+        $start = new Carbon($request->input('start'));
+        $start = $start->toDateString();
+        $end = new Carbon($request->input('end'));
+        $end = $end->addDays(1);
+        $end = $end->toDateString();
+        $event->start = $start;
+        $event->end = $end;
+        $event->time_category = $timeCategory;
+        $event->save();
+        return redirect('/calendar');
     }
 
 
@@ -149,7 +160,6 @@ class EventController extends Controller
         $id = $request->input('id');
         $start = $request->input('eventStart');
         $end = $request->input('eventEnd');
-
         $event = Event::find($id);
         $event->start = $start;
         $event->end = $end;
@@ -164,6 +174,9 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::find($id);
+        $event->delete();
+        return($event);
     }
+
 }

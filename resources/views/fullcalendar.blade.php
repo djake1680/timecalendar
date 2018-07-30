@@ -23,6 +23,7 @@
     </div>
 @endsection
 @include('modal.eventform')
+@include('modal.editeventform')
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
     <script src="/js/calendar.js"></script>

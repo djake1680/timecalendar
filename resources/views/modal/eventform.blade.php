@@ -1,7 +1,7 @@
 <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            {!! Form::open(['action' => 'EventController@store', 'method' => 'POST']) !!}
+            {!! Form::open(['action' => 'EventController@store', 'method' => 'POST', 'id' => 'event_form']) !!}
             {{ csrf_field() }}
             <div class="modal-header">
                 <h5 class="event-modal-title" id="exampleModalLongTitle"></h5>
