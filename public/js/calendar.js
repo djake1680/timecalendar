@@ -30,35 +30,43 @@ $(document).ready(function(){
         selectOnClose: true
     }).on('change', function(e) {
         let empID = $(this).val();
-        employeeEvents = $('#employee_event_list').DataTable({
-            "dom": 'lBrtip',
-            ajax: {
-                "url": "/events/" + empID,
-                "type": "GET",
-                "data": function(d) {
-                    console.log(d);
+        if(empID !== '-1') {
+            employeeEvents = $('#employee_event_list').DataTable({
+                "dom": 'lBrtip',
+                ajax: {
+                    "url": "/events/" + empID,
+                    "type": "GET",
+                    "data": function (d) {
+                        console.log(d);
+                    },
                 },
-            },
-            buttons: [
-                'excel', 'pdf', 'print'
-            ],
-            columns: [
-                {'data': 'request_type'},
-                {'data': 'start',
-                    render: function(data, type, row) {
-                        let start = moment(data, "YYYY-MM-DD").format('M/DD/YYYY');
-                        return start;
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ],
+                columns: [
+                    {'data': 'request_type'},
+                    {
+                        'data': 'start',
+                        render: function (data, type, row) {
+                            let start = moment(data, "YYYY-MM-DD").format('M/DD/YYYY');
+                            return start;
+                        }
+                    },
+                    {
+                        'data': 'end',
+                        render: function (data, type, row) {
+                            let end = moment(data, 'YYYY-MM-DD').subtract(1, 'days').format('M/DD/YYYY');
+                            return end;
+                        }
                     }
-                },
-                {'data': 'end',
-                    render: function(data, type, row) {
-                        let end = moment(data, 'YYYY-MM-DD').subtract(1, 'days').format('M/DD/YYYY');
-                        return end;
-                    }
-                }
-            ],
-            destroy: true
-        });
+                ],
+                destroy: true
+            });
+        }
+        else {
+            $('#employee_event_list').DataTable().destroy();
+            $('#employee_event_list').empty();
+        }
     });
 
     function refreshCalendar(modal) {
@@ -147,14 +155,18 @@ $(document).ready(function(){
 
            $.post("calendar/event_drop", { _token: $('meta[name=csrf-token]').attr('content'), eventStart: eventStart, eventEnd: eventEnd, id: event.id }, function(response) {
                refreshCalendar("#addEventModal");
-               $('#employee_event_list').DataTable().ajax.reload();
+               if(employeeEvents != undefined) {
+                   employeeEvents.ajax.reload();
+               }
            });
         },
         eventResize: function(event) {
             var eventEnd = moment(event.end).format("YYYY-MM-DD");
             $.post("calendar/resize", {_token: $('meta[name=csrf-token]').attr('content'), eventEnd: eventEnd, id: event.id }, function(response){
                 refreshCalendar("#addEventModal");
-                $('#employee_event_list').DataTable().ajax.reload();
+                if(employeeEvents != undefined) {
+                    employeeEvents.ajax.reload();
+                }
             });
         }
     });
