@@ -25,7 +25,7 @@
                 <!-- EMPLOYEES TAB ENDS -->
 
                 <!-- BUSINESS CONFIG TAB STARTS -->
-                <div class="tab-pane active" id="business_config" role="tabpanel">
+                <div class="tab-pane" id="business_config" role="tabpanel">
                     @include('components.management.businessConfig')
                 </div>
                 <!-- EMPLOYEES TAB ENDS -->
